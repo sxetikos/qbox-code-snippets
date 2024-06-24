@@ -3,36 +3,26 @@
 
 	"(Client) Notify" : { 
 		
-		"prefix": "QBCore.Functions.Notify", 
+		"prefix": "qbxnotify", 
 		
 		"body": [  
 	
-		"QBCore.Functions.Notify('${1:Text}', '${2:error}', ${3:7500})",
+		"exports.qbx_core:Notify('${1:Text}', '${2:error}', ${3:7500})",
+
 		],
 		"description": "Allows you to use the built in notification system which means no dependency on another."
 	},
 
 	"(Client) GetPlayerData" : { 
 	
-		"prefix": "QBCore.Functions.GetPlayerData", 
+		"prefix": "playerdata", 
 		
 		"body": [  
 	
-		"local PlayerData = QBCore.Functions.GetPlayerData()",
+		"local PlayerData = QBX.PlayerData",
 		
 		],
 		"description": "Gets all the player data from the client"
-	},
-
-	"(Client / Server) GetCoreObject()" : { 
-	
-		"prefix": "GetCoreObject", 
-		
-		"body": [  
-	
-		"local QBCore = exports['qb-core']:GetCoreObject()",
-		],
-		"description": "Imports QBCore into a file"
 	},
 
 	"(Client) isLoggedIn" : { 
@@ -52,23 +42,12 @@
 		
 		"body": [  
 	
-		"QBCore.Functions.HasItem('${1:ItemName}')"
+		"exports.ox_inventory:GetItemCount(${1:ItemName})"
+
 		],
 		"description": "Returns whether or not a player has a certain item."
 	},
 
-	"(Server) Add Commands" : { 
-	
-		"prefix": "QBCore.Commands.Add", 
-		
-		"body": [  
-	
-		"QBCore.Commands.Add('${1:CommandName}', '${2:Help Text}', {}, false, function(source, args)",
-		"    $0",
-		"end)",
-		],
-		"description": "Add a command using QBCore.Commands.Add"
-	},
 
 	"(Server) CreateUseableItem" : { 
 	
@@ -76,7 +55,8 @@
 		
 		"body": [  
 	
-		"QBCore.Functions.CreateUseableItem('${1:ItemName}' , function(item)",
+
+		"exports.qbx_core:CreateUseableItem('${1:ItemName}' , function(item)",
 		"    $0",
 		"end)",
 		],
@@ -85,51 +65,14 @@
 
 	"(Server) GetPlayer" : { 
 	
-		"prefix": "QBCore.Functions.GetPlayer", 
+		"prefix": "getplayer", 
 		
 		"body": [  
 	
-		"local Player = QBCore.Functions.GetPlayer(source)",
+		"local Player = exports.qbx_core:GetPlayer(source)",
 		
 		],
 		"description": "This returns the player (server side)"
-	},
-
-	"(Client) PlayerData " : { 
-	
-		"prefix": "PlayerData ", 
-		
-		"body": [  
-	
-		"local PlayerData = {}",
-		"",
-		"-- Sets the playerdata when spawned",
-		"RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()",
-		"    PlayerData = QBCore.Functions.GetPlayerData()",
-		"end)",
-		"",
-		"-- Sets the playerdata to an empty table when the player has quit or did /logout",
-		"RegisterNetEvent('QBCore:Client:OnPlayerUnload', function()",
-		"    PlayerData = {}",
-		"end)",
-		"",
-		"-- When the players job gets updated this will trigger and update the playerdata",
-		"RegisterNetEvent('QBCore:Client:OnJobUpdate', function(JobInfo)",
-		"    PlayerData.job = JobInfo",
-		"end)",
-		"",
-		"-- When the players gang gets updated this will trigger and update the playerdata",
-		"RegisterNetEvent('QBCore:Client:OnGangUpdate', function(GangInfo)",
-		"    PlayerData.gang = GangInfo",
-		"end)",
-		"",
-		"-- This will update all the PlayerData that doesn't get updated with a specific event other than this like the metadata",
-		"RegisterNetEvent('QBCore:Player:SetPlayerData', function(val)",
-		"    PlayerData = val",
-		"end)",
-		
-		],
-		"description": "This is how to register playerdata without having to call the function everytime. -- Code thanks to BerkieB#5038"
 	},
 
 	"(Client) Progressbar" : { 
@@ -295,10 +238,6 @@
 		"body": [  
 	
 		"CreateThread(function()",
-		"    while true do",
-		"        $0",
-		"        Wait(${1:1})",
-		"    end",
 		"end)"
 		],
 		"description": "Create a thread"
